@@ -4,7 +4,7 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
@@ -206,7 +206,7 @@ Notification that is sent when PayPal processes a payment.
 
   #store $id somewhere so we can get it back again later
   #store current context with $id
-  #Apache::Session works good for this
+  #Apache::Session works well for this
   #print button to the browser
   #note, button is a CGI form, enclosed in <form></form> tags
 

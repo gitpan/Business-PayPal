@@ -1,5 +1,10 @@
 Revision history for Perl extension Business::PayPal.
 
+0.03  Thu Dec 25 01:00:00 2008
+    - fix typo in usage for button_image
+    - new maintainer PHRED
+
+
 0.02  Sun Aug 25 23:23:04 2002
 	- fixed Makefile.PL so that CPAN.pm will install
           prerequisite modules.  Thanks to Rick Myers for

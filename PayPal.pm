@@ -4,7 +4,7 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
@@ -304,9 +304,9 @@ Notification that is sent when PayPal processes a payment.
 
   required, defaults to:
 
-    CGI::image_button(-name ='submit',
-                      -src => 'http://images.paypal.com/x-click-but01.gif'
-                      -alt => 'Make payments with PayPal',
+    CGI::image_button(-name => 'submit',
+                      -src  => 'http://images.paypal.com/x-click-but01.gif'
+                      -alt  => 'Make payments with PayPal',
                      )
 
   You may wish to change this if the button is on an https page 

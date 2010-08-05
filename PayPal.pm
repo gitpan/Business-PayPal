@@ -4,23 +4,63 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
 use CGI;
 
+our $Cert = <<CERT;
+-----BEGIN CERTIFICATE-----
+MIIFxzCCBK+gAwIBAgIQa1UJlCErojlUgeB4Mkr3yDANBgkqhkiG9w0BAQUFADCB
+ujELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQL
+ExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2Ug
+YXQgaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwNjE0MDIGA1UEAxMr
+VmVyaVNpZ24gQ2xhc3MgMyBFeHRlbmRlZCBWYWxpZGF0aW9uIFNTTCBDQTAeFw0w
+OTA0MjgwMDAwMDBaFw0xMDEwMzEyMzU5NTlaMIIBDzETMBEGCysGAQQBgjc8AgED
+EwJVUzEZMBcGCysGAQQBgjc8AgECEwhEZWxhd2FyZTEbMBkGA1UEDxMSVjEuMCwg
+Q2xhdXNlIDUuKGIpMRAwDgYDVQQFEwczMDE0MjY3MQswCQYDVQQGEwJVUzETMBEG
+A1UEERQKOTUxMzEtMjAyMTETMBEGA1UECBMKQ2FsaWZvcm5pYTERMA8GA1UEBxQI
+U2FuIEpvc2UxFjAUBgNVBAkUDTIyMTEgTiAxc3QgU3QxFTATBgNVBAoUDFBheVBh
+bCwgSW5jLjEcMBoGA1UECxQTSW5mb3JtYXRpb24gU3lzdGVtczEXMBUGA1UEAxQO
+d3d3LnBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAOToN9bo
+3xHnLlGXNIM8UY+H9Kef36HIvrPKzpZEyzM/W8olqDIFnx1Y5veAPiri4gy0vViz
+x7NOI7A0UFJb8TMJWfWHODj6UL4vb61SyMKb70N+QcN7VIZBUcnR2cH5SFoVY2Pl
+AXafyci9t8eMaZIu633X6f3giUrZeJJ1zcJrAgMBAAGjggHzMIIB7zAJBgNVHRME
+AjAAMB0GA1UdDgQWBBS5q3ty06dVj98AICEVjN/y2+anPDALBgNVHQ8EBAMCBaAw
+QgYDVR0fBDswOTA3oDWgM4YxaHR0cDovL0VWU2VjdXJlLWNybC52ZXJpc2lnbi5j
+b20vRVZTZWN1cmUyMDA2LmNybDBEBgNVHSAEPTA7MDkGC2CGSAGG+EUBBxcGMCow
+KAYIKwYBBQUHAgEWHGh0dHBzOi8vd3d3LnZlcmlzaWduLmNvbS9ycGEwHQYDVR0l
+BBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8GA1UdIwQYMBaAFPyKULqeuSVae1WF
+T5UAY4/pWGtDMHwGCCsGAQUFBwEBBHAwbjAtBggrBgEFBQcwAYYhaHR0cDovL0VW
+U2VjdXJlLW9jc3AudmVyaXNpZ24uY29tMD0GCCsGAQUFBzAChjFodHRwOi8vRVZT
+ZWN1cmUtYWlhLnZlcmlzaWduLmNvbS9FVlNlY3VyZTIwMDYuY2VyMG4GCCsGAQUF
+BwEMBGIwYKFeoFwwWjBYMFYWCWltYWdlL2dpZjAhMB8wBwYFKw4DAhoEFEtruSiW
+Bgy70FI4mymsSweLIQUYMCYWJGh0dHA6Ly9sb2dvLnZlcmlzaWduLmNvbS92c2xv
+Z28xLmdpZjANBgkqhkiG9w0BAQUFAAOCAQEAelhvEIp1VFp6KYp0GyDC8RKCDUAD
+lRXIoILBtZUo3yp8hyjr5yCD0GyEER8vyGgOOi36m7myBoVqETmwrGVqaIMGTwJH
+AfjYhZkai2HQpkQTg1IUvIQr92P0+NwdWx2+zTLmJKLh8WEThtiehFm/SRUELSLi
+N2c6kajnuXhVPf3vAClnLi7/4as1ZaXWx0Q1YtRcXWWtaCjisiVuzR7mR3p0bIWT
+/gCb0NFZXDHZn7S2WWf6kDoKXkSElwW2uwwpAL7rE46NIePB1qRPyZV4Q70LYb9i
+STuh/fJHwostpLYwphYeXObI1TpZV47asnQ7k+u6s4Rp9ui3ItQs/+1P4w==
+-----END CERTIFICATE-----
+CERT
+chomp($Cert);
+
+our $Certcontent = <<CERTCONTENT;
+Subject Name: /1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/2.5.4.15=V1.0, Clause 5.(b)/serialNumber=3014267/C=US/postalCode=95131-2021/ST=California/L=San Jose/streetAddress=2211 N 1st St/O=PayPal, Inc./OU=Information Systems/CN=www.paypal.com
+Issuer  Name: /C=US/O=VeriSign, Inc./OU=VeriSign Trust Network/OU=Terms of use at https://www.verisign.com/rpa (c)06/CN=VeriSign Class 3 Extended Validation SSL CA
+CERTCONTENT
+chomp($Certcontent);
+
 
 # creates new PayPal object.  Assigns an id if none is provided.
 sub new {
     my $invocant = shift;
-    my @cert = split /\n\n/, join "", <DATA>;
     my $class = ref($invocant) || $invocant;
     my $self = {
         id => undef,
         address => 'https://www.paypal.com/cgi-bin/webscr',
-        certcontent => $cert[0],
-        cert => $cert[1],
         @_,
     };
     bless $self, $class;
@@ -74,12 +114,13 @@ sub button {
         day_phone_c         => undef,
         receiver_email      => undef,
         invoice             => undef,
+        currency_code       => undef,
         custom              => $self->{id},
         @_,
     );
     my $key;
     my $content = CGI::start_form( -method => 'POST',
-        -action => 'https://www.paypal.com/cgi-bin/webscr',
+        -action => $self->{'address'},
                                  );
     foreach (keys %buttonparam) {
         next unless defined $buttonparam{$_};
@@ -116,12 +157,10 @@ sub ipnvalidate {
 # this method should not normally be used unless you need to test, or if
 # you are overriding the behaviour of ipnvalidate.  It takes a reference
 # to a hash containing the query, posts to PayPal with the data, and returns
-# success or failure, as well as PayPal's respons.
+# success or failure, as well as PayPal's response.
 sub postpaypal {
     my $self = shift;
     my $address = $self->{address};
-    my $cert = $self->{cert};
-    my $certcontent = $self->{certcontent};
     my $query = shift; # reference to hash containing name value pairs
     my ($site, $port, $path);
 
@@ -156,13 +195,11 @@ sub postpaypal {
                        Net::SSLeay::X509_get_issuer_name($ppcert))
                     . "\n";
 
-    chomp $cert;
     chomp $ppx509;
     chomp $ppcertcontent;
-    chomp $certcontent;
-    return (wantarray ? (undef, "PayPal cert failed to match") : undef)  
-        unless $cert eq $ppx509;
-    return (wantarray ? (undef, "PayPal cert contents failed to match") : undef)        unless $ppcertcontent eq "$certcontent";
+    return (wantarray ? (undef, "PayPal cert failed to match: $ppx509\n$Cert") : undef)  
+        unless $Cert eq $ppx509;
+    return (wantarray ? (undef, "PayPal cert contents failed to match $ppcertcontent") : undef)        unless $ppcertcontent eq "$Certcontent";
     return (wantarray ? (undef, 'PayPal says transaction INVALID') : undef)
         if $page eq 'INVALID';
     return (wantarray ? (1, 'PayPal says transaction VERIFIED') : 1)
@@ -220,7 +257,7 @@ Notification that is sent when PayPal processes a payment.
   my $query = new CGI;
   my %query = $query->Vars;
   my $id = $query{custom};
-  my $paypal = Business::PayPal->new($id);
+  my $paypal = Business::PayPal->new(id => $id);
   my ($txnstatus, $reason) = $paypal->ipnvalidate(\%query);
   die "PayPal failed: $reason" unless $txnstatus;
   my $money = $query{payment_gross};
@@ -353,6 +390,13 @@ Notification that is sent when PayPal processes a payment.
   If set to 1, does not ask customer for a note with the payment, 
   if set to 0, the customer will be asked to include a note.
 
+=item currency_code
+
+  Currency the payment should be taken in, e.g. EUR, GBP.
+  If not specified payments default to USD.
+
+=item address1
+
 =item undefined_quantity
 
   defaults to 0
@@ -467,6 +511,10 @@ Notification that is sent when PayPal processes a payment.
   the data, and returns success or failure, as well as PayPal's 
   response.
 
+=head1 MAINTAINER
+
+phred, E<lt>fred@redhotpenguin.comE<gt>
+
 =head1 AUTHOR
 
 mock, E<lt>mock@obscurity.orgE<gt>
@@ -482,41 +530,11 @@ and then cancel before paying (or pay, and come to CanSecWest :-) ).
 
 =head1 LICENSE
 
+Copyright (c) 2010, phred E<lt>fred@redhotpenguin.comE<gt>. All rights reserved.
+
 Copyright (c) 2002, mock E<lt>mock@obscurity.orgE<gt>.  All rights reserved.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =cut
-
-__DATA__
-Subject Name: /C=US/ST=California/L=Palo Alto/O=Paypal, Inc./OU=Information Systems/CN=www.paypal.com
-Issuer  Name: /O=VeriSign Trust Network/OU=VeriSign, Inc./OU=VeriSign International Server CA - Class 3/OU=www.verisign.com/CPS Incorp.by Ref. LIABILITY LTD.(c)97 VeriSign
-
------BEGIN CERTIFICATE-----
-MIIEXTCCA8agAwIBAgIQJxYkWks944byj39QYE8jujANBgkqhkiG9w0BAQQFADCB
-ujEfMB0GA1UEChMWVmVyaVNpZ24gVHJ1c3QgTmV0d29yazEXMBUGA1UECxMOVmVy
-aVNpZ24sIEluYy4xMzAxBgNVBAsTKlZlcmlTaWduIEludGVybmF0aW9uYWwgU2Vy
-dmVyIENBIC0gQ2xhc3MgMzFJMEcGA1UECxNAd3d3LnZlcmlzaWduLmNvbS9DUFMg
-SW5jb3JwLmJ5IFJlZi4gTElBQklMSVRZIExURC4oYyk5NyBWZXJpU2lnbjAeFw0w
-MjAzMTMwMDAwMDBaFw0wNDAzMTIyMzU5NTlaMIGEMQswCQYDVQQGEwJVUzETMBEG
-A1UECBMKQ2FsaWZvcm5pYTESMBAGA1UEBxQJUGFsbyBBbHRvMRUwEwYDVQQKFAxQ
-YXlwYWwsIEluYy4xHDAaBgNVBAsUE0luZm9ybWF0aW9uIFN5c3RlbXMxFzAVBgNV
-BAMUDnd3dy5wYXlwYWwuY29tMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCm
-xcPGW6myyBznfmpSX8SuSIOKKXIz3ROHi/TVYeE5tm316LtLsu10rqOHWKggl36H
-eW8VN+daS3qblzi4ajqMuhDZOvGZSvSBzZKG7Y00wy5Z9LlH07+9fLp6L1SxCFo2
-HZVTZXLIW3dbbXXf0j5V5tjeH94nK1y1nRHrCbAAKQIDAQABo4IBljCCAZIwCQYD
-VR0TBAIwADCBrAYDVR0gBIGkMIGhMIGeBgtghkgBhvhFAQcBATCBjjAoBggrBgEF
-BQcCARYcaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL0NQUzBiBggrBgEFBQcCAjBW
-MBUWDlZlcmlTaWduLCBJbmMuMAMCAQEaPVZlcmlTaWduJ3MgQ1BTIGluY29ycC4g
-YnkgcmVmZXJlbmNlIGxpYWIuIGx0ZC4gKGMpOTcgVmVyaVNpZ24wEQYJYIZIAYb4
-QgEBBAQDAgZAMCgGA1UdJQQhMB8GCWCGSAGG+EIEAQYIKwYBBQUHAwEGCCsGAQUF
-BwMCMDQGCCsGAQUFBwEBBCgwJjAkBggrBgEFBQcwAYYYaHR0cDovL29jc3AudmVy
-aXNpZ24uY29tMEYGA1UdHwQ/MD0wO6A5oDeGNWh0dHA6Ly9jcmwudmVyaXNpZ24u
-Y29tL0NsYXNzM0ludGVybmF0aW9uYWxTZXJ2ZXIuY3JsMBsGCmCGSAGG+EUBBg8E
-DRYLMDgtMDI5LTM5MDAwDQYJKoZIhvcNAQEEBQADgYEAum8UDgBwY7f4+OV3dFzc
-dLFO39dcrw+mx+tfI4KuqdEwDRirk57nxVuuJa2yjN+T5hUfnxrYqzLsfnYWwaia
-oBiz/YiehkC+zhlae5ekxYy/EiiUzyWRFtpjY1wbBZk4j1RcOPcL7A6MihFcduWp
-sM+AeBP+TLqtVikM9XWsg/U=
------END CERTIFICATE-----
-

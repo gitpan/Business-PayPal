@@ -4,7 +4,7 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
@@ -12,43 +12,46 @@ use CGI;
 
 our $Cert = <<CERT;
 -----BEGIN CERTIFICATE-----
-MIIFxzCCBK+gAwIBAgIQa1UJlCErojlUgeB4Mkr3yDANBgkqhkiG9w0BAQUFADCB
+MIIGSzCCBTOgAwIBAgIQLjOHT2/i1B7T//819qTJGDANBgkqhkiG9w0BAQUFADCB
 ujELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQL
 ExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2Ug
 YXQgaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwNjE0MDIGA1UEAxMr
-VmVyaVNpZ24gQ2xhc3MgMyBFeHRlbmRlZCBWYWxpZGF0aW9uIFNTTCBDQTAeFw0w
-OTA0MjgwMDAwMDBaFw0xMDEwMzEyMzU5NTlaMIIBDzETMBEGCysGAQQBgjc8AgED
-EwJVUzEZMBcGCysGAQQBgjc8AgECEwhEZWxhd2FyZTEbMBkGA1UEDxMSVjEuMCwg
-Q2xhdXNlIDUuKGIpMRAwDgYDVQQFEwczMDE0MjY3MQswCQYDVQQGEwJVUzETMBEG
-A1UEERQKOTUxMzEtMjAyMTETMBEGA1UECBMKQ2FsaWZvcm5pYTERMA8GA1UEBxQI
-U2FuIEpvc2UxFjAUBgNVBAkUDTIyMTEgTiAxc3QgU3QxFTATBgNVBAoUDFBheVBh
-bCwgSW5jLjEcMBoGA1UECxQTSW5mb3JtYXRpb24gU3lzdGVtczEXMBUGA1UEAxQO
-d3d3LnBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAOToN9bo
-3xHnLlGXNIM8UY+H9Kef36HIvrPKzpZEyzM/W8olqDIFnx1Y5veAPiri4gy0vViz
-x7NOI7A0UFJb8TMJWfWHODj6UL4vb61SyMKb70N+QcN7VIZBUcnR2cH5SFoVY2Pl
-AXafyci9t8eMaZIu633X6f3giUrZeJJ1zcJrAgMBAAGjggHzMIIB7zAJBgNVHRME
-AjAAMB0GA1UdDgQWBBS5q3ty06dVj98AICEVjN/y2+anPDALBgNVHQ8EBAMCBaAw
-QgYDVR0fBDswOTA3oDWgM4YxaHR0cDovL0VWU2VjdXJlLWNybC52ZXJpc2lnbi5j
-b20vRVZTZWN1cmUyMDA2LmNybDBEBgNVHSAEPTA7MDkGC2CGSAGG+EUBBxcGMCow
-KAYIKwYBBQUHAgEWHGh0dHBzOi8vd3d3LnZlcmlzaWduLmNvbS9ycGEwHQYDVR0l
-BBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMB8GA1UdIwQYMBaAFPyKULqeuSVae1WF
-T5UAY4/pWGtDMHwGCCsGAQUFBwEBBHAwbjAtBggrBgEFBQcwAYYhaHR0cDovL0VW
-U2VjdXJlLW9jc3AudmVyaXNpZ24uY29tMD0GCCsGAQUFBzAChjFodHRwOi8vRVZT
-ZWN1cmUtYWlhLnZlcmlzaWduLmNvbS9FVlNlY3VyZTIwMDYuY2VyMG4GCCsGAQUF
-BwEMBGIwYKFeoFwwWjBYMFYWCWltYWdlL2dpZjAhMB8wBwYFKw4DAhoEFEtruSiW
-Bgy70FI4mymsSweLIQUYMCYWJGh0dHA6Ly9sb2dvLnZlcmlzaWduLmNvbS92c2xv
-Z28xLmdpZjANBgkqhkiG9w0BAQUFAAOCAQEAelhvEIp1VFp6KYp0GyDC8RKCDUAD
-lRXIoILBtZUo3yp8hyjr5yCD0GyEER8vyGgOOi36m7myBoVqETmwrGVqaIMGTwJH
-AfjYhZkai2HQpkQTg1IUvIQr92P0+NwdWx2+zTLmJKLh8WEThtiehFm/SRUELSLi
-N2c6kajnuXhVPf3vAClnLi7/4as1ZaXWx0Q1YtRcXWWtaCjisiVuzR7mR3p0bIWT
-/gCb0NFZXDHZn7S2WWf6kDoKXkSElwW2uwwpAL7rE46NIePB1qRPyZV4Q70LYb9i
-STuh/fJHwostpLYwphYeXObI1TpZV47asnQ7k+u6s4Rp9ui3ItQs/+1P4w==
+VmVyaVNpZ24gQ2xhc3MgMyBFeHRlbmRlZCBWYWxpZGF0aW9uIFNTTCBDQTAeFw0x
+MTAzMjMwMDAwMDBaFw0xMzA0MDEyMzU5NTlaMIIBDzETMBEGCysGAQQBgjc8AgED
+EwJVUzEZMBcGCysGAQQBgjc8AgECEwhEZWxhd2FyZTEdMBsGA1UEDxMUUHJpdmF0
+ZSBPcmdhbml6YXRpb24xEDAOBgNVBAUTBzMwMTQyNjcxCzAJBgNVBAYTAlVTMRMw
+EQYDVQQRFAo5NTEzMS0yMDIxMRMwEQYDVQQIEwpDYWxpZm9ybmlhMREwDwYDVQQH
+FAhTYW4gSm9zZTEWMBQGA1UECRQNMjIxMSBOIDFzdCBTdDEVMBMGA1UEChQMUGF5
+UGFsLCBJbmMuMRowGAYDVQQLFBFQYXlQYWwgUHJvZHVjdGlvbjEXMBUGA1UEAxQO
+d3d3LnBheXBhbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCd
+szetUP2zRUbaN1vHuX9WV2mMq0IIVQ5NX2kpFCwBYc4vwW/CHiMr+dgs8lDduCfH
+5uxhyRxKtJa6GElIIiP8qFB5HFWf1uUgoDPC1he4HaxUkowCnVEqjEowOy9R9Cr4
+yyrmqmMEDccVsx4d3dOY2JF1FrLDHT7qH/GCBnyYw+nZJ88ci6HqnVJiNM+NX/D/
+d7Y3r3V1bp7y1DaJwK/z/uMwNCC+lcM59w+nwAvLutgCW6WitFHMB+HpSsOSJlIZ
+ydpj0Ox+javRR1FIdhRUFMK4wwcbD8PvULi1gM+sYsJIzP0mHDlhWRIDImG1zmy2
+x7ZLp0HA5WayjI5aSn9fAgMBAAGjggHzMIIB7zAJBgNVHRMEAjAAMB0GA1UdDgQW
+BBQxqt0MVbSO4lWE5aB52xc8nEq5RTALBgNVHQ8EBAMCBaAwQgYDVR0fBDswOTA3
+oDWgM4YxaHR0cDovL0VWU2VjdXJlLWNybC52ZXJpc2lnbi5jb20vRVZTZWN1cmUy
+MDA2LmNybDBEBgNVHSAEPTA7MDkGC2CGSAGG+EUBBxcGMCowKAYIKwYBBQUHAgEW
+HGh0dHBzOi8vd3d3LnZlcmlzaWduLmNvbS9ycGEwHQYDVR0lBBYwFAYIKwYBBQUH
+AwEGCCsGAQUFBwMCMB8GA1UdIwQYMBaAFPyKULqeuSVae1WFT5UAY4/pWGtDMHwG
+CCsGAQUFBwEBBHAwbjAtBggrBgEFBQcwAYYhaHR0cDovL0VWU2VjdXJlLW9jc3Au
+dmVyaXNpZ24uY29tMD0GCCsGAQUFBzAChjFodHRwOi8vRVZTZWN1cmUtYWlhLnZl
+cmlzaWduLmNvbS9FVlNlY3VyZTIwMDYuY2VyMG4GCCsGAQUFBwEMBGIwYKFeoFww
+WjBYMFYWCWltYWdlL2dpZjAhMB8wBwYFKw4DAhoEFEtruSiWBgy70FI4mymsSweL
+IQUYMCYWJGh0dHA6Ly9sb2dvLnZlcmlzaWduLmNvbS92c2xvZ28xLmdpZjANBgkq
+hkiG9w0BAQUFAAOCAQEAisdjAvky8ehg4A0J3ED6+yR0BU77cqtrLUKqzaLcLL/B
+wuj8gErM8LLaWMGM/FJcoNEUgSkMI3/Qr1YXtXFvdqo3urqMhi/SsuUJU85Gnoxr
+Vr0rWoBqOOnmcsVEgtYeusK0sQbxq5JlE1eq9xqYZrKuOuA/8JS1V7Ss1iFrtA5i
+pwotaEK3k5NEJOQh9/Zm+fy1vZfUyyX+iVSlmyFHC4bzu2DlzZln3UzjBJeXoEfe
+YjQyLpdUhUhuPslV1qs+Bmi6O+e6htDHvD05wUaRzk6vsPcEQ3EqsPbdpLgejb5p
+9YDR12XLZeQjO1uiunCsJkDIf9/5Mqpu57pw8v1QNA==
 -----END CERTIFICATE-----
 CERT
 chomp($Cert);
 
 our $Certcontent = <<CERTCONTENT;
-Subject Name: /1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/2.5.4.15=V1.0, Clause 5.(b)/serialNumber=3014267/C=US/postalCode=95131-2021/ST=California/L=San Jose/streetAddress=2211 N 1st St/O=PayPal, Inc./OU=Information Systems/CN=www.paypal.com
+Subject Name: /1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/businessCategory=Private Organization/serialNumber=3014267/C=US/postalCode=95131-2021/ST=California/L=San Jose/street=2211 N 1st St/O=PayPal, Inc./OU=PayPal Production/CN=www.paypal.com
 Issuer  Name: /C=US/O=VeriSign, Inc./OU=VeriSign Trust Network/OU=Terms of use at https://www.verisign.com/rpa (c)06/CN=VeriSign Class 3 Extended Validation SSL CA
 CERTCONTENT
 chomp($Certcontent);
@@ -84,7 +87,7 @@ sub button {
             -name => 'submit',
             -src => 'http://images.paypal.com/images/x-click-but01.gif',
             -alt => 'Make payments with PayPal',
-            ), 
+            ),
         business            => undef,
         item_name           => undef,
         item_number         => undef,
@@ -125,7 +128,7 @@ sub button {
     foreach (keys %buttonparam) {
         next unless defined $buttonparam{$_};
         if ($_ eq 'button_image') {
-            $content .= $buttonparam{$_}; 
+            $content .= $buttonparam{$_};
         }
         else {
             $content .= CGI::hidden( -name => $_,
@@ -148,7 +151,7 @@ sub ipnvalidate {
     my $query = shift;
     $$query{cmd} = '_notify-validate';
     my $id = $self->{id};
-    my ($succ, $reason) = $self->postpaypal($query); 
+    my ($succ, $reason) = $self->postpaypal($query);
     return (wantarray ? ($id, $reason) : $id)
         if $succ;
     return (wantarray ? (undef, $reason) : undef);
@@ -174,14 +177,14 @@ sub postpaypal {
         ($site, $port) = ($address[0], '443');
     }
     $path = $address[1];
-    my ($page, 
-        $response, 
-        $headers, 
-        $ppcert, 
-        ) = Net::SSLeay::post_https3($site, 
-                                         $port, 
-                                         $path, 
-                                         '', 
+    my ($page,
+        $response,
+        $headers,
+        $ppcert,
+        ) = Net::SSLeay::post_https3($site,
+                                         $port,
+                                         $path,
+                                         '',
                                          Net::SSLeay::make_form(%$query));
 
 
@@ -197,7 +200,7 @@ sub postpaypal {
 
     chomp $ppx509;
     chomp $ppcertcontent;
-    return (wantarray ? (undef, "PayPal cert failed to match: $ppx509\n$Cert") : undef)  
+    return (wantarray ? (undef, "PayPal cert failed to match: $ppx509\n$Cert") : undef)
         unless $Cert eq $ppx509;
     return (wantarray ? (undef, "PayPal cert contents failed to match $ppcertcontent") : undef)        unless $ppcertcontent eq "$Certcontent";
     return (wantarray ? (undef, 'PayPal says transaction INVALID') : undef)
@@ -208,7 +211,7 @@ sub postpaypal {
     return (wantarray ? (undef, "Bad stuff happened") :undef);
 }
 
- 
+
 
 1;
 
@@ -225,8 +228,8 @@ Notification that is sent when PayPal processes a payment.
 
 =head1 SYNOPSIS
 
-  To generate a PayPal button for use on your site
-  Include something like the following in your CGI
+To generate a PayPal button for use on your site
+Include something like the following in your CGI
 
   use Business::PayPal;
   my $paypal = Business::PayPal->new;
@@ -241,20 +244,20 @@ Notification that is sent when PayPal processes a payment.
   );
   my $id = $paypal->id;
 
-  #store $id somewhere so we can get it back again later
-  #store current context with $id
-  #Apache::Session works well for this
-  #print button to the browser
-  #note, button is a CGI form, enclosed in <form></form> tags
+store $id somewhere so we can get it back again later
+store current context with $id
+Apache::Session works well for this
+print button to the browser
+note, button is a CGI form, enclosed in <form></form> tags
 
 
 
-  To validate the Instant Payment Notification from PayPal for the 
-  button used above include something like the following in your 
-  'notify_url' CGI.
+To validate the Instant Payment Notification from PayPal for the
+button used above include something like the following in your
+'notify_url' CGI.
 
   use CGI;
-  my $query = new CGI;
+  my $query = CGI->new;
   my %query = $query->Vars;
   my $id = $query{custom};
   my $paypal = Business::PayPal->new(id => $id);
@@ -262,18 +265,18 @@ Notification that is sent when PayPal processes a payment.
   die "PayPal failed: $reason" unless $txnstatus;
   my $money = $query{payment_gross};
   my $paystatus = $query{payment_status};
-  
-  #check if paystatus eq 'Completed'
-  #check if $money is the ammount you expected
-  #save payment status information to store as $id
+
+check if paystatus eq 'Completed'
+check if $money is the ammount you expected
+save payment status information to store as $id
 
 
-  To tell the user if their payment succeeded or not, use something like
-  the following in the CGI pointed to by the 'return' parameter in your
-  PayPal button.
+To tell the user if their payment succeeded or not, use something like
+the following in the CGI pointed to by the 'return' parameter in your
+PayPal button.
 
   use CGI;
-  my $query = new CGI;
+  my $query = CGI->new;
   my $id = $query{custom};
 
   #get payment status from store for $id
@@ -284,234 +287,244 @@ Notification that is sent when PayPal processes a payment.
 
 =head2 new()
 
-  Creates a new Business::PayPal object, it can take the 
-  following parameters:
+Creates a new Business::PayPal object, it can take the
+following parameters:
 
 =over 2
 
-=item id  
+=item id
 
-  - The Business::PayPal object id, if not specified a new 
-    id will be created using md5_hex(rand())
+The Business::PayPal object id, if not specified a new
+id will be created using md5_hex(rand())
 
 =item address
 
-  - The address of PayPal's payment server, currently:
-    https://www.paypal.com/cgi-bin/webscr
+The address of PayPal's payment server, currently:
+https://www.paypal.com/cgi-bin/webscr
 
 =item cert
 
-  - The x509 certificate for I<address>, see source for default
+The x509 certificate for I<address>, see source for default
 
-=item certcontent 
+=item certcontent
 
-  - The contents of the x509 certificate I<cert>, see source for 
-    default
+The contents of the x509 certificate I<cert>, see source for
+default
 
 =back
 
 =head2 id()
 
-  Returns the id for the Business::PayPal object. 
+Returns the id for the Business::PayPal object.
 
 =head2 button()
 
-  Returns the HTML for a PayPal button.  It takes a large number of
-  parameters, which control the look and function of the button, some
-  of which are required and some of which have defaults.  They are
-  as follows:
+Returns the HTML for a PayPal button.  It takes a large number of
+parameters, which control the look and function of the button, some
+of which are required and some of which have defaults.  They are
+as follows:
 
 =over 2
 
 =item cmd
 
-  required, defaults to '_ext-enter'
-  This allows the user information to be pre-filled in.
-  You should never need to specify this, as the default should 
-  work fine.
+required, defaults to '_ext-enter'
+
+This allows the user information to be pre-filled in.
+You should never need to specify this, as the default should
+work fine.
 
 =item redirect_cmd
 
-  required, defaults to '_xclick'
-  This allows the user information to be pre-filled in.
-  You should never need to specify this, as the default should 
-  work fine.
+required, defaults to '_xclick'
+
+This allows the user information to be pre-filled in.
+You should never need to specify this, as the default should
+work fine.
 
 =item button_image
 
-  required, defaults to:
+required, defaults to:
 
     CGI::image_button(-name => 'submit',
                       -src  => 'http://images.paypal.com/x-click-but01.gif'
                       -alt  => 'Make payments with PayPal',
                      )
 
-  You may wish to change this if the button is on an https page 
-  so as to avoid the browser warnings about insecure content on a 
-  secure page.
+You may wish to change this if the button is on an https page
+so as to avoid the browser warnings about insecure content on a
+secure page.
 
 =item business
 
-  required, no default
-  This is the name of your PayPal account.
+required, no default
+
+This is the name of your PayPal account.
 
 =item item_name
 
-  This is the name of the item you are selling.
+This is the name of the item you are selling.
 
 =item item_number
 
-  This is a numerical id of the item you are selling.
+This is a numerical id of the item you are selling.
 
 =item image_url
 
-  A URL pointing to a 150 x 50 image which will be displayed 
-  instead of the name of your PayPal account.
+A URL pointing to a 150 x 50 image which will be displayed
+instead of the name of your PayPal account.
 
 =item no_shipping
 
-  defaults to 1
-  If set to 1, does not ask customer for shipping info, if 
-  set to 0 the customer will be prompted for shipping information.
+defaults to 1
+
+If set to 1, does not ask customer for shipping info, if
+set to 0 the customer will be prompted for shipping information.
 
 =item return
 
-  This is the URL to which the customer will return to after 
-  they have finished paying.
+This is the URL to which the customer will return to after
+they have finished paying.
 
 =item cancel_return
 
-  This is the URL to which the customer will be sent if they cancel
-  before paying.
+This is the URL to which the customer will be sent if they cancel
+before paying.
 
 =item no_note
 
-  defaults to 1
-  If set to 1, does not ask customer for a note with the payment, 
-  if set to 0, the customer will be asked to include a note.
+defaults to 1
+
+If set to 1, does not ask customer for a note with the payment,
+if set to 0, the customer will be asked to include a note.
 
 =item currency_code
 
-  Currency the payment should be taken in, e.g. EUR, GBP.
-  If not specified payments default to USD.
+Currency the payment should be taken in, e.g. EUR, GBP.
+If not specified payments default to USD.
 
 =item address1
 
 =item undefined_quantity
 
-  defaults to 0
-  If set to 0 the quantity defaults to 1, if set to 1 the user 
-  can edit the quantity.
+defaults to 0
+
+If set to 0 the quantity defaults to 1, if set to 1 the user
+can edit the quantity.
 
 =item notify_url
 
-  The URL to which PayPal Instant Payment Notification is sent.
+The URL to which PayPal Instant Payment Notification is sent.
 
 =item first_name
 
-  First name of customer, used to pre-fill PayPal forms.
+First name of customer, used to pre-fill PayPal forms.
 
 =item last_name
 
-  Last name of customer, used to pre-fill PayPal forms.
+Last name of customer, used to pre-fill PayPal forms.
 
 =item shipping
 
-  I don't know, something to do with shipping, please tell me if
-  you find out.
+I don't know, something to do with shipping, please tell me if
+you find out.
 
 =item shipping2
 
-  I don't know, something to do with shipping, please tell me if you
-  find out.
+I don't know, something to do with shipping, please tell me if you
+find out.
 
 =item quantity
 
-  defaults to 1
-  Number of items being sold.
+defaults to 1
+
+Number of items being sold.
 
 =item amount
 
-  Price of the item being sold.
+Price of the item being sold.
 
 =item address1
 
-  Address of customer, used to pre-fill PayPal forms.
+Address of customer, used to pre-fill PayPal forms.
 
 =item address2
 
-  Address of customer, used to pre-fill PayPal forms.
+Address of customer, used to pre-fill PayPal forms.
 
 =item city
 
-  City of customer, used to pre-fill PayPal forms.
+City of customer, used to pre-fill PayPal forms.
 
 =item state
 
-  State of customer, used to pre-fill PayPal forms.
+State of customer, used to pre-fill PayPal forms.
 
 =item zip
 
-  Zip of customer, used to pre-fill PayPal forms.
+Zip of customer, used to pre-fill PayPal forms.
 
 =item night_phone_a
 
-  Phone
+Phone
 
 =item night_phone_b
 
-  Phone
+Phone
 
 =item night_phone_c
 
-  Phone
+Phone
 
 =item day_phone_a
 
-  Phone
+Phone
 
 =item day_phone_b
 
-  Phone
+Phone
 
 =item day_phone_c
 
-  Phone
+Phone
 
 =item receiver_email
 
-  Email address of customer - I think
+Email address of customer - I think
 
 =item invoice
 
-  Invoice number - I think
+Invoice number - I think
 
 =item custom
 
-  defaults to the Business::PayPal id
-  Used by Business::PayPal to track which button is associated 
-  with which Instant Payment Notification.
+defaults to the Business::PayPal id
+
+Used by Business::PayPal to track which button is associated
+with which Instant Payment Notification.
 
 =back
 
 =head2 ipnvalidate()
 
-  Takes a reference to a hash of name value pairs, such as from a 
-  CGI query object, which should contain all the name value pairs 
-  which have been posted to the script by PayPal's Instant Payment 
-  Notification posts that data back to PayPal, checking if the ssl 
-  certificate matches, and returns success or failure, and the 
-  reason.
+Takes a reference to a hash of name value pairs, such as from a
+CGI query object, which should contain all the name value pairs
+which have been posted to the script by PayPal's Instant Payment
+Notification posts that data back to PayPal, checking if the ssl
+certificate matches, and returns success or failure, and the
+reason.
 
 =head2 postpaypal()
 
-  This method should not normally be used unless you need to test, 
-  or if you are overriding the behaviour of ipnvalidate.  It takes a 
-  reference to a hash containing the query, posts to PayPal with 
-  the data, and returns success or failure, as well as PayPal's 
-  response.
+This method should not normally be used unless you need to test,
+or if you are overriding the behaviour of ipnvalidate.  It takes a
+reference to a hash containing the query, posts to PayPal with
+the data, and returns success or failure, as well as PayPal's
+response.
 
 =head1 MAINTAINER
+
+Gabor Szabo, E<lt>gabor@szabgab.comE<gt>
 
 phred, E<lt>fred@redhotpenguin.comE<gt>
 

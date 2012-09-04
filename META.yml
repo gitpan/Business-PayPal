@@ -18,8 +18,7 @@ no_index:
     - t
     - inc
 requires:
-  CGI: 0
   Digest::MD5: 0
   Net::SSLeay: 1.14
   Test::More: 0
-version: 0.05
+version: 0.06

@@ -4,11 +4,10 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
-use CGI;
 
 our $Cert = <<CERT;
 -----BEGIN CERTIFICATE-----
@@ -59,8 +58,8 @@ chomp($Certcontent);
 
 # creates new PayPal object.  Assigns an id if none is provided.
 sub new {
-    my $invocant = shift;
-    my $class = ref($invocant) || $invocant;
+    my $class = shift;
+
     my $self = {
         id => undef,
         address => 'https://www.paypal.com/cgi-bin/webscr',
@@ -68,26 +67,25 @@ sub new {
     };
     bless $self, $class;
     $self->{id} = md5_hex(rand()) unless $self->{id};
+
     return $self;
 }
 
 # returns current PayPal id
 sub id {
-    my $self = shift;
+    my ($self) = @_;
+
     return $self->{id};
 }
 
 #creates a PayPal button
 sub button {
     my $self = shift;
+
     my %buttonparam = (
         cmd                 => '_ext-enter',
         redirect_cmd        => '_xclick',
-        button_image        => CGI::image_button(
-            -name => 'submit',
-            -src => 'http://images.paypal.com/images/x-click-but01.gif',
-            -alt => 'Make payments with PayPal',
-            ),
+        button_image        => qq{<input type="image" name="submit" src="http://images.paypal.com/images/x-click-but01.gif" alt="Make payments with PayPal" />},
         business            => undef,
         item_name           => undef,
         item_number         => undef,
@@ -122,21 +120,16 @@ sub button {
         @_,
     );
     my $key;
-    my $content = CGI::start_form( -method => 'POST',
-        -action => $self->{'address'},
-                                 );
-    foreach (keys %buttonparam) {
-        next unless defined $buttonparam{$_};
-        if ($_ eq 'button_image') {
-            $content .= $buttonparam{$_};
-        }
-        else {
-            $content .= CGI::hidden( -name => $_,
-                                     -default => $buttonparam{$_},
-                                   );
-        }
+    my $content = qq{<form method="post" action="$self->{address}" enctype="multipart/form-data">};
+
+    foreach my $param (sort keys %buttonparam) {
+        next if not defined $buttonparam{$param};
+        next if $param eq 'button_image';
+        $content .= qq{<input type="hidden" name="$param" value="$buttonparam{$param}" />};
     }
-    $content .= CGI::endform();
+    $content .= $buttonparam{button_image};
+    $content .= qq{</form>};
+
     return $content;
 }
 
@@ -147,13 +140,13 @@ sub button {
 # posts that data back to PayPal, checking if the ssl certificate matches,
 # and returns success or failure, and the reason.
 sub ipnvalidate {
-    my $self = shift;
-    my $query = shift;
-    $$query{cmd} = '_notify-validate';
+    my ($self, $query) = @_;
+
+    $query->{cmd} = '_notify-validate';
     my $id = $self->{id};
     my ($succ, $reason) = $self->postpaypal($query);
-    return (wantarray ? ($id, $reason) : $id)
-        if $succ;
+
+    return (wantarray ? ($id,   $reason) : $id  ) if $succ;
     return (wantarray ? (undef, $reason) : undef);
 }
 
@@ -162,9 +155,9 @@ sub ipnvalidate {
 # to a hash containing the query, posts to PayPal with the data, and returns
 # success or failure, as well as PayPal's response.
 sub postpaypal {
-    my $self = shift;
+    my ($self, $query) = @_;
+
     my $address = $self->{address};
-    my $query = shift; # reference to hash containing name value pairs
     my ($site, $port, $path);
 
     #following code splits an url into site, port and path components
@@ -244,11 +237,13 @@ Include something like the following in your CGI
   );
   my $id = $paypal->id;
 
-store $id somewhere so we can get it back again later
-store current context with $id
-Apache::Session works well for this
-print button to the browser
-note, button is a CGI form, enclosed in <form></form> tags
+Store $id somewhere so we can get it back again later
+
+Store current context with $id.
+
+Print button to the browser.
+
+Note, button is an HTML form, already enclosed in <form></form> tags
 
 
 

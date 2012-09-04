@@ -32,7 +32,6 @@
       },
       "runtime" : {
          "requires" : {
-            "CGI" : 0,
             "Digest::MD5" : 0,
             "Net::SSLeay" : "1.14",
             "Test::More" : 0
@@ -40,5 +39,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.05"
+   "version" : "0.06"
 }

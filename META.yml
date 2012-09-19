@@ -21,4 +21,4 @@ requires:
   Digest::MD5: 0
   Net::SSLeay: 1.14
   Test::More: 0
-version: 0.07
+version: 0.08

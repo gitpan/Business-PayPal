@@ -4,7 +4,7 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
@@ -89,6 +89,44 @@ yV9cU3oSGzyTfllBTZWTzvPT1rzG40AL3OQXk8qgWUKfpEhsZVAnMBa2Xg==
 -----END CERTIFICATE-----
 CERT
 
+push @certificates, <<'CERT';
+-----BEGIN CERTIFICATE-----
+MIIGFTCCBP2gAwIBAgIQNlFL9KRy51iD/qafxhevQDANBgkqhkiG9w0BAQUFADCB
+ujELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQL
+ExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2Ug
+YXQgaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwNjE0MDIGA1UEAxMr
+VmVyaVNpZ24gQ2xhc3MgMyBFeHRlbmRlZCBWYWxpZGF0aW9uIFNTTCBDQTAeFw0x
+MzA2MjAwMDAwMDBaFw0xNTA0MDIyMzU5NTlaMIIBCTETMBEGCysGAQQBgjc8AgED
+EwJVUzEZMBcGCysGAQQBgjc8AgECEwhEZWxhd2FyZTEdMBsGA1UEDxMUUHJpdmF0
+ZSBPcmdhbml6YXRpb24xEDAOBgNVBAUTBzMwMTQyNjcxCzAJBgNVBAYTAlVTMRMw
+EQYDVQQRFAo5NTEzMS0yMDIxMRMwEQYDVQQIEwpDYWxpZm9ybmlhMREwDwYDVQQH
+FAhTYW4gSm9zZTEWMBQGA1UECRQNMjIxMSBOIDFzdCBTdDEVMBMGA1UEChQMUGF5
+UGFsLCBJbmMuMRQwEgYDVQQLFAtDRE4gU3VwcG9ydDEXMBUGA1UEAxQOd3d3LnBh
+eXBhbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDZje1RuIc0
+ZTQmFw9evOsbre5ARBELvpAh9zVIgemHpQtECv0D8IUaYA9adxCdfw7L4kh6hCnK
+zpUdVMyIAZJmJJHiGLdpPPN5NDQdA7KUjfWXWmXGnmiH17afV0NkJkh2MXEAZyQs
+bnd8BWP740X7SDFemI6FVnjbH8JAE9ItOCOcISghdzblXafVGbrshqbXlYWCYfKR
+o3Y606vmgR9hVROYWgqIogdh8SO9injq/wtjzNGFRZvShVGuUCxrN3MLgPQ/MMk1
+Aj2J9eavxIu9Y6cPMO3cGQGNncsUG4PcaIaTGhA5rKLE8hgPlngswrFt8KLbc7MD
+xq3rCwfSpuAzAgMBAAGjggHDMIIBvzA7BgNVHREENDAygg53d3cucGF5cGFsLmNv
+bYISaGlzdG9yeS5wYXlwYWwuY29tggx0LnBheXBhbC5jb20wCQYDVR0TBAIwADAO
+BgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsGAQUFBwMCMEQG
+A1UdIAQ9MDswOQYLYIZIAYb4RQEHFwYwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly93
+d3cudmVyaXNpZ24uY29tL2NwczAdBgNVHQ4EFgQUGApL2hPrOnyphg7eRbdMj1CZ
+oacwHwYDVR0jBBgwFoAU/IpQup65JVp7VYVPlQBjj+lYa0MwQgYDVR0fBDswOTA3
+oDWgM4YxaHR0cDovL0VWU2VjdXJlLWNybC52ZXJpc2lnbi5jb20vRVZTZWN1cmUy
+MDA2LmNybDB8BggrBgEFBQcBAQRwMG4wLQYIKwYBBQUHMAGGIWh0dHA6Ly9FVlNl
+Y3VyZS1vY3NwLnZlcmlzaWduLmNvbTA9BggrBgEFBQcwAoYxaHR0cDovL0VWU2Vj
+dXJlLWFpYS52ZXJpc2lnbi5jb20vRVZTZWN1cmUyMDA2LmNlcjANBgkqhkiG9w0B
+AQUFAAOCAQEAOEWwhuTokV821X0QOG+dhhG6+byaz4exGrvrwyvN90BXPiuqN4Me
+alagNOhVqVcAv73XufXrX/CzYsJtL++4UZeJl2ysjxyYA7kpjhfwq51RYz6iOlKF
+DaxNLYKaY+cmA+cflvkiqxigOZnKxyzl2Jp0ttobSLGGMvnXW7BI6fhdZfLe32g4
+MesCwybF7PYDixvIe6/cW1TUcg5Vs3ZOhMUde4LFlmUDpMZ/HX8ffQ8esVN+sgIh
+y2mt5QRfmWiJmazmAZIaAAgfF/HJW9DuSJbjylrHklkrbip20iOlEbomy5Eq9If7
+O7ugV9tPvj01jhp3LXSQH9KDSo0QXD0a6g==
+-----END CERTIFICATE-----
+CERT
+
 chomp(@certificates);
 
 my @cert_contents;
@@ -109,6 +147,11 @@ CERTCONTENT
 
 push @cert_contents, <<'CERTCONTENT';
 Subject Name: /1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/2.5.4.15=Private Organization/serialNumber=3014267/C=US/postalCode=95131-2021/ST=California/L=San Jose/streetAddress=2211 N 1st St/O=PayPal, Inc./OU=Hosting Support/CN=www.paypal.com
+Issuer  Name: /C=US/O=VeriSign, Inc./OU=VeriSign Trust Network/OU=Terms of use at https://www.verisign.com/rpa (c)06/CN=VeriSign Class 3 Extended Validation SSL CA
+CERTCONTENT
+
+push @cert_contents, <<'CERTCONTENT';
+Subject Name: /1.3.6.1.4.1.311.60.2.1.3=US/1.3.6.1.4.1.311.60.2.1.2=Delaware/businessCategory=Private Organization/serialNumber=3014267/C=US/postalCode=95131-2021/ST=California/L=San Jose/street=2211 N 1st St/O=PayPal, Inc./OU=CDN Support/CN=www.paypal.com
 Issuer  Name: /C=US/O=VeriSign, Inc./OU=VeriSign Trust Network/OU=Terms of use at https://www.verisign.com/rpa (c)06/CN=VeriSign Class 3 Extended Validation SSL CA
 CERTCONTENT
 
@@ -178,15 +221,15 @@ sub button {
         @_,
     );
     my $key;
-    my $content = qq{<form method="post" action="$self->{address}" enctype="multipart/form-data">};
+    my $content = qq{<form method="post" action="$self->{address}" enctype="multipart/form-data">\n};
 
     foreach my $param (sort keys %buttonparam) {
         next if not defined $buttonparam{$param};
         next if $param eq 'button_image';
-        $content .= qq{<input type="hidden" name="$param" value="$buttonparam{$param}" />};
+        $content .= qq{<input type="hidden" name="$param" value="$buttonparam{$param}" />\n};
     }
-    $content .= $buttonparam{button_image};
-    $content .= qq{</form>};
+    $content .= "$buttonparam{button_image}\n";
+    $content .= qq{</form>\n};
 
     return $content;
 }
@@ -238,6 +281,8 @@ sub postpaypal {
                                          '',
                                          Net::SSLeay::make_form(%$query));
 
+    return (wantarray ? (undef, "No PayPal cert found") : undef)
+        unless $ppcert;
 
     my $ppx509 = Net::SSLeay::PEM_get_string_X509($ppcert);
     my $ppcertcontent =
@@ -607,6 +652,11 @@ https://www.cansecwest.com/register.cgi is currently using this module
 to do conference registrations.  If you wish to see it working, just
 fill out the forms until you get to the PayPal button, click on the button,
 and then cancel before paying (or pay, and come to CanSecWest :-) ).
+
+
+Explanation of the fields: L<http://www.paypalobjects.com/en_US/ebook/subscriptions/html.html>
+See also in the pdf here: L<https://www.paypal.com/cgi-bin/webscr?cmd=p/xcl/rec/subscr-manual-outside>
+
 
 =head1 LICENSE
 

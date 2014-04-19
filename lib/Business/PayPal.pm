@@ -4,7 +4,7 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
@@ -161,6 +161,45 @@ CkglOXtqWHyA9nCZftjRSRDpswH0KlbSx1fES1zrlvWbhJzejuI+AO5E1HMKm4rO
 Kk0O/l78spIffhU6SurTk7WGbr/YzCB2YBC9L0qYFcNUcJBMU5LKV/4XXWMzVQW0
 aPyuvAIIrmXLRtXxxi7TlBOxeUsXAz/DQt72FJnHllzSkDEPEG11+xjAL6i33hzi
 SZeqm2fJ6m8lDPoDdSp5TlSzkRRZQ0FcAc8BAdxfS1dd34Fa+6p59HM6XM6J
+-----END CERTIFICATE-----
+CERT
+
+# added to 0.12 on 2014.04.19
+push @certificates, <<'CERT';
+-----BEGIN CERTIFICATE-----
+MIIGCDCCBPCgAwIBAgIQCDTkU9Q6aFcjr/uxM85FfDANBgkqhkiG9w0BAQUFADCB
+ujELMAkGA1UEBhMCVVMxFzAVBgNVBAoTDlZlcmlTaWduLCBJbmMuMR8wHQYDVQQL
+ExZWZXJpU2lnbiBUcnVzdCBOZXR3b3JrMTswOQYDVQQLEzJUZXJtcyBvZiB1c2Ug
+YXQgaHR0cHM6Ly93d3cudmVyaXNpZ24uY29tL3JwYSAoYykwNjE0MDIGA1UEAxMr
+VmVyaVNpZ24gQ2xhc3MgMyBFeHRlbmRlZCBWYWxpZGF0aW9uIFNTTCBDQTAeFw0x
+NDA0MTUwMDAwMDBaFw0xNTA0MDIyMzU5NTlaMIIBCTETMBEGCysGAQQBgjc8AgED
+EwJVUzEZMBcGCysGAQQBgjc8AgECEwhEZWxhd2FyZTEdMBsGA1UEDxMUUHJpdmF0
+ZSBPcmdhbml6YXRpb24xEDAOBgNVBAUTBzMwMTQyNjcxCzAJBgNVBAYTAlVTMRMw
+EQYDVQQRFAo5NTEzMS0yMDIxMRMwEQYDVQQIEwpDYWxpZm9ybmlhMREwDwYDVQQH
+FAhTYW4gSm9zZTEWMBQGA1UECRQNMjIxMSBOIDFzdCBTdDEVMBMGA1UEChQMUGF5
+UGFsLCBJbmMuMRQwEgYDVQQLFAtDRE4gU3VwcG9ydDEXMBUGA1UEAxQOd3d3LnBh
+eXBhbC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC+rkZNmW5t
+bDVLiDI4u9zQCZXQmuQ2558KsPLX0jBiAx+txvRtEIT3eRu8dMCo44L+1AqTLj1L
+EiStrV9d7RzJHG8Te+LBJU5GX087LlrLwVq0gs+to2XohjO17R14mafH1foQLvsR
+TiNYBpaHcXVRc4wP9Mp8j5EleRPcsPDeCAcBC2TMV2oShmIXPl25Yj1Yeypu9qYw
+QQL87GRyM9XVP2ttl/PBYb84O6tBR9TCA9c7WVed4aEq1njog1093apdF/2U1uV6
+7wJjxqPGLVszCIv1pQO0/vIdq79enrh4OSAraGFP5JnyqsJNS0jLaMIQP/qausVq
+U48i89fJ7aTVAgMBAAGjggG2MIIBsjBnBgNVHREEYDBegg53d3cucGF5cGFsLmNv
+bYISaGlzdG9yeS5wYXlwYWwuY29tggx0LnBheXBhbC5jb22CDGMucGF5cGFsLmNv
+bYIOdG1zLnBheXBhbC5jb22CDHRtcy5lYmF5LmNvbTAJBgNVHRMEAjAAMA4GA1Ud
+DwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwZgYDVR0g
+BF8wXTBbBgtghkgBhvhFAQcXBjBMMCMGCCsGAQUFBwIBFhdodHRwczovL2Quc3lt
+Y2IuY29tL2NwczAlBggrBgEFBQcCAjAZGhdodHRwczovL2Quc3ltY2IuY29tL3Jw
+YTAfBgNVHSMEGDAWgBT8ilC6nrklWntVhU+VAGOP6VhrQzArBgNVHR8EJDAiMCCg
+HqAchhpodHRwOi8vc2Euc3ltY2IuY29tL3NhLmNybDBXBggrBgEFBQcBAQRLMEkw
+HwYIKwYBBQUHMAGGE2h0dHA6Ly9zYS5zeW1jZC5jb20wJgYIKwYBBQUHMAKGGmh0
+dHA6Ly9zYS5zeW1jYi5jb20vc2EuY3J0MA0GCSqGSIb3DQEBBQUAA4IBAQB2CKtk
+9vQL5IG9WbI+pPz1A3UEWWq1/hI0KgScic3L4TxsIDnU6m8nNH9iHEVyETnARaoq
+NVy2BuMIp48Ir4CyEM6lKFscSVUR62sqgMEJ7YJySMoZi+U0lDxQJndrGmO6b2PR
+WO0rHbenbgQlmcOUA5DsD0yTgzWG43CEDTzOr06AStORP1UzLx9nhy8JokHAEEos
+xIigb5Ms7zjSYcfs8zd9yTKlXB5IDoVsRyp/xjBewvYu3eNNrP/vSCbHUXRHMkYL
+zXoKXVvFje0XvN4JvOmTqXyFnIimg7zW5R8FEN+yT6LFlwCLV8cN58dXV4d9E59c
+XPfzzQCJDYWaonDa
 -----END CERTIFICATE-----
 CERT
 
@@ -339,16 +378,31 @@ sub postpaypal {
     chomp $ppx509;
     chomp $ppcertcontent;
 
-	# TODO warn if there is a value in $Cert or $Certcontent as those will be deprecated
 	my @certs = @certificates;
 	if ($Cert) {
-		# TODO warn
+		# TODO added in 0.12
+		warn "The global variable \$Cert is deprecated and will be removed soon. Pass a certificate to the constructor using the 'cert' parameter.\n";
 		push @certs, $Cert;
 	}
 	my @cert_cont = @cert_contents;
 	if ($Certcontent) {
-		# TODO warn
+		# TODO added in 0.12
+		warn "The global variable \$Certcontent is deprecated and will be removed soon. Pass a certificate to the constructor using the 'certcontent' parameter.\n";
 		push @cert_cont, $Certcontent;
+	}
+
+	if ($self->{addcert}) {
+		push @certs, $self->{cert};
+	}
+	if ($self->{addcertcontent}) {
+		push @certs, $self->{certcontent};
+	}
+
+	if ($self->{cert}) {
+		@certs = $self->{cert};
+	}
+	if ($self->{certcontent}) {
+		@certs = $self->{certcontent};
 	}
 
     return (wantarray ? (undef, "PayPal cert failed to match: $ppx509") : undef)
@@ -420,9 +474,9 @@ button used above include something like the following in your
   my $money = $query{payment_gross};
   my $paystatus = $query{payment_status};
 
-check if paystatus eq 'Completed'
-check if $money is the ammount you expected
-save payment status information to store as $id
+Check if paystatus eq 'Completed'.
+Check if $money is the amount you expected.
+Save payment status information to store as $id.
 
 
 To tell the user if their payment succeeded or not, use something like
@@ -458,12 +512,22 @@ https://www.paypal.com/cgi-bin/webscr
 
 =item cert
 
-The x509 certificate for I<address>, see source for default
+The x509 certificate for I<address>, see source for default.
 
 =item certcontent
 
 The contents of the x509 certificate I<cert>, see source for
-default
+default.
+
+=item addcert
+
+The x509 certificate for I<address>.
+This is added to the default values.
+
+=item addcertcontent
+
+The contents of the x509 certificate I<cert>,
+This is added to the default values.
 
 =back
 
@@ -678,7 +742,7 @@ response.
 
 =head1 MAINTAINER
 
-Gabor Szabo, E<lt>gabor@szabgab.comE<gt>
+Gabor Szabo, L<http://szabgab.com/>, L<http://perlmaven.com/>
 
 phred, E<lt>fred@redhotpenguin.comE<gt>
 
@@ -689,12 +753,6 @@ mock, E<lt>mock@obscurity.orgE<gt>
 =head1 SEE ALSO
 
 L<CGI>, L<perl>, L<Apache::Session>.
-
-https://www.cansecwest.com/register.cgi is currently using this module
-to do conference registrations.  If you wish to see it working, just
-fill out the forms until you get to the PayPal button, click on the button,
-and then cancel before paying (or pay, and come to CanSecWest :-) ).
-
 
 Explanation of the fields: L<http://www.paypalobjects.com/en_US/ebook/subscriptions/html.html>
 See also in the pdf here: L<https://www.paypal.com/cgi-bin/webscr?cmd=p/xcl/rec/subscr-manual-outside>

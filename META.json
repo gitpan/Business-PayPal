@@ -4,7 +4,7 @@
       "phred <fred@redhotpenguin.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.133380",
+   "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142060",
    "license" : [
       "perl_5"
    ],
@@ -34,7 +34,7 @@
          "requires" : {
             "Digest::MD5" : "0",
             "Net::SSLeay" : "1.14",
-            "Test::More" : "0"
+            "Test::More" : "1.00"
          }
       }
    },
@@ -44,5 +44,5 @@
          "url" : "http://github.com/szabgab/Business-PayPal"
       }
    },
-   "version" : "0.13"
+   "version" : "0.14"
 }

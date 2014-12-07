@@ -4,7 +4,7 @@ use 5.6.1;
 use strict;
 use warnings;
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 use Net::SSLeay 1.14;
 use Digest::MD5 qw(md5_hex);
@@ -302,7 +302,12 @@ sub button {
         @_,
     );
     my $key;
-    my $content = qq{<form method="post" action="$self->{address}" enctype="multipart/form-data">\n};
+    my $form_id = '';
+    if (defined $buttonparam{form_id}) {
+        $form_id = qq{id="$buttonparam{form_id}"};
+        delete $buttonparam{form_id};
+    }
+    my $content = qq{<form method="post" action="$self->{address}" enctype="multipart/form-data" $form_id>\n};
 
     foreach my $param (sort keys %buttonparam) {
         next if not defined $buttonparam{$param};
@@ -490,6 +495,10 @@ PayPal button.
   #get payment status from store for $id
   #return payment status to customer
 
+In order to use the sandbox provided by PayPal, you can provide the address of the sandbox
+in the constructor:
+
+  my $pp = Business::PayPal->new( address  => 'https://www.sandbox.paypal.com/cgi-bin/webscr' );
 
 =head1 DESCRIPTION
 
@@ -572,6 +581,17 @@ required, defaults to:
 You may wish to change this if the button is on an https page
 so as to avoid the browser warnings about insecure content on a
 secure page.
+
+for example use a Bootstrap style button:
+
+  button_image  => '<button type="button" class="btn btn-success">9 USD per month</button>',
+
+=item form_id
+
+  form_id => 'some_id',
+
+Adding id="some_id" to the form created. Adding and id will make it easier to locate
+the form on the page by some JavaScript code.
 
 =item business
 

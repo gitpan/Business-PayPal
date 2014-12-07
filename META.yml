@@ -3,24 +3,24 @@ abstract: 'Perl extension for automating PayPal transactions'
 author:
   - 'phred <fred@redhotpenguin.com>'
 build_requires:
-  ExtUtils::MakeMaker: 0
+  ExtUtils::MakeMaker: '0'
 configure_requires:
-  ExtUtils::MakeMaker: 0
+  ExtUtils::MakeMaker: '0'
 dynamic_config: 1
-generated_by: 'ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.133380'
+generated_by: 'ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142060'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: '1.4'
 name: Business-PayPal
 no_index:
   directory:
     - t
     - inc
 requires:
-  Digest::MD5: 0
-  Net::SSLeay: 1.14
-  Test::More: 0
+  Digest::MD5: '0'
+  Net::SSLeay: '1.14'
+  Test::More: '1.00'
 resources:
   repository: http://github.com/szabgab/Business-PayPal
-version: 0.13
+version: '0.14'
